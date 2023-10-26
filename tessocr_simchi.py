@@ -1,5 +1,3 @@
-
-
 from PIL import ImageGrab, Image
 import pyperclip
 import pytesseract
@@ -17,7 +15,7 @@ def check_clipboard_for_image():
         print(f"Error: {e}")
         return None
 
-def trans_jp_to_eng(text):
+def trans_chi_to_eng(text):
     translator = Translator()
     translated_text = translator.translate(text, src='zh-CN', dest='en')
     return translated_text.text
@@ -34,7 +32,7 @@ def main():
         ocr_result = ocr_result.replace('\xa9', ' (copyright) ')
         print(ocr_result)
         ocr_result = pyperclip.paste()
-        english_text = trans_jp_to_eng(ocr_result)
+        english_text = trans_chi_to_eng(ocr_result)
         print(english_text)
         pyperclip.copy(english_text)
 
@@ -42,7 +40,11 @@ def main():
 
     else:
         print("No image in the clipboard.")
-        input("Press enter to exit.")
+        ocr_result = pyperclip.paste()
+        print(ocr_result)
+        english_text = trans_chi_to_eng(ocr_result)
+        print(english_text)
+        pyperclip.copy(english_text)
 
 if __name__ == "__main__":
     main()

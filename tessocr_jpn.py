@@ -43,6 +43,13 @@ def main():
 
     else:
         print("No image in the clipboard.")
+        ocr_result = pyperclip.paste()
+        print(ocr_result)
+        english_text = trans_jp_to_eng(ocr_result)
+        print(english_text)
+        pyperclip.copy(english_text)
+
+
         input("Press enter to exit.")
 
 if __name__ == "__main__":
