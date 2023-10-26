@@ -3,6 +3,7 @@
 from PIL import ImageGrab, Image
 import pyperclip
 import pytesseract
+from googletrans import Translator
 
 
 def check_clipboard_for_image():
@@ -17,9 +18,13 @@ def check_clipboard_for_image():
         print(f"Error: {e}")
         return None
 
+def trans_jp_to_eng(text):
+    translator = Translator()
+    translated_text = translator.translate(text, src='ja', dest='en')
+    return translated_text.text
+
 def main():
     lang = "jpn"
-            
 
     img = check_clipboard_for_image()
 
@@ -29,6 +34,11 @@ def main():
         print("OCR Result:")
         ocr_result = ocr_result.replace('\xa9', ' (copyright) ')
         print(ocr_result)
+        ocr_result = pyperclip.paste()
+        english_text = trans_jp_to_eng(ocr_result)
+        print(english_text)
+        pyperclip.copy(english_text)
+
         input("Press enter to exit.")
 
     else:
